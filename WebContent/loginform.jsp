@@ -20,6 +20,11 @@
     background-repeat: repeat-x;
     background-size: cover;
 }</style><p><p><p><p>
+
+
+<p>
+		<a href="index.jsp">HOME PAGE</a>
+	</p>
     <div class="container ">
 
         <h1>Login Page</h1>

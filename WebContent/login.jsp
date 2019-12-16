@@ -14,27 +14,36 @@
 	<jsp:setProperty property="*" name="user" />
 	<jsp:useBean id="userService" class="com.demo.service.UserService"></jsp:useBean>
 	<jsp:useBean id="cartService" class="com.demo.service.CartService"></jsp:useBean>
+
+
+
+	<%
+		if (session.getAttribute("user_id") != null) {
+	%>
+
+	<script type="text/javascript" language="javascript">
+		alert("you have already logged in");
+		window.document.location.href = "index.jsp";
+	</script>
+	<%
+		} else {
+	%>
 	<%
 		int user_id = userService.get_user_id(user);
 
-		if (user_id != 0 && userService.authorize(user)) {
-			session.setAttribute("user_id", user_id);
+			if (user_id != 0 && userService.authorize(user)) {
+				session.setAttribute("user_id", user_id);
 
-			
-			
-			
-			
-			List<Item> visitorItemList = (List<Item>) session.getAttribute("visitor_cart");
-			System.out.println("LOGIN: " + visitorItemList);
-			cartService.combine(visitorItemList, String.valueOf(user_id));
-			session.removeAttribute("visitor_cart");
-			
-			
-			
-			response.sendRedirect("index.jsp");
+				List<Item> visitorItemList = (List<Item>) session.getAttribute("visitor_cart");
+				System.out.println("LOGIN: " + visitorItemList);
+				cartService.combine(visitorItemList, String.valueOf(user_id));
+				session.removeAttribute("visitor_cart");
 
-		} else
-			out.println("<p style=\"color: red;\"> LOGIN ERROR  </p>");
+				response.sendRedirect("index.jsp");
+
+			} else
+				out.println("<p style=\"color: red;\"> LOGIN ERROR  </p>");
+		}
 	%>
 
 </body>
